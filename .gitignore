@@ -11,6 +11,8 @@ venv/
 # Flask
 *.sqlite3
 *.log
+# template
+template/
 
 # Node/React/Electron
 node_modules/

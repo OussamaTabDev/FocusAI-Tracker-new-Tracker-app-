@@ -1,16 +1,16 @@
 "use client"
 
 import { useState } from "react"
-import { TopBar } from "./components/TopBar"
-import { Dashboard } from "./components/Dashboard"
-import { SettingsWindow } from "./components/SettingsWindow"
-import { ThemeProvider } from "./components/ThemeProvider"
-import { useSystemTracker } from "./hooks/useSystemTracker"
-import { Alert, AlertDescription } from "./components/ui/alert"
+import { TopBar } from "@/src/components/top-bar"
+import { Dashboard } from "@/src/components/dashboard"
+import { SettingsWindow } from "@/src/components/settings-window"
+import { ThemeProvider } from "@/src/components/theme-provider"
+import { useSystemTracker } from "@/src/hooks/use-system-tracker"
+import { Alert, AlertDescription } from "@/src/components/ui/alert"
 import { AlertTriangle } from "lucide-react"
 
-function App() {
-  const [currentMode, setCurrentMode] = useState("Standard")
+export default function Home() {
+  const [currentMode, setCurrentMode] = useState<"Standard" | "Kids">("Standard")
   const [showSettings, setShowSettings] = useState(false)
 
   const { isTracking, currentData, systemInfo, error, startTracking, stopTracking } = useSystemTracker()
@@ -24,7 +24,7 @@ function App() {
   }
 
   return (
-    <ThemeProvider defaultTheme="light">
+    <ThemeProvider attribute="class" defaultTheme="light">
       <div className="min-h-screen bg-background text-foreground">
         <div className="flex flex-col h-screen">
           <TopBar
@@ -55,5 +55,3 @@ function App() {
     </ThemeProvider>
   )
 }
-
-export default App
