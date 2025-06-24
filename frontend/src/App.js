@@ -12,6 +12,7 @@ import { AlertTriangle } from "lucide-react"
 function App() {
   const [currentMode, setCurrentMode] = useState("Standard")
   const [showSettings, setShowSettings] = useState(false)
+  const [activeWindow, setActiveWindow] = useState(null)
 
   const { isTracking, currentData, systemInfo, error, startTracking, stopTracking } = useSystemTracker()
 
@@ -20,6 +21,15 @@ function App() {
       await stopTracking()
     } else {
       await startTracking()
+    }
+  }
+
+  const fetchActiveWindow = async () => {
+    if (window.electron && window.electron.getActiveWindow) {
+      const win = await window.electron.getActiveWindow()
+      setActiveWindow(win)
+    } else {
+      alert('Not running in Electron')
     }
   }
 
@@ -48,6 +58,13 @@ function App() {
             trackingData={currentData}
             systemInfo={systemInfo}
           />
+
+          <button onClick={fetchActiveWindow}>Get Active Window</button>
+          {activeWindow && (
+            <pre style={{ textAlign: 'left', background: '#eee', padding: '1em' }}>
+              {JSON.stringify(activeWindow, null, 2)}
+            </pre>
+          )}
         </div>
 
         {showSettings && <SettingsWindow onClose={() => setShowSettings(false)} />}
@@ -57,3 +74,12 @@ function App() {
 }
 
 export default App
+
+async function fetchActiveWindow() {
+  if (window.electron && window.electron.getActiveWindow) {
+    const win = await window.electron.getActiveWindow();
+    console.log(win);
+  } else {
+    console.log('Not running in Electron');
+  }
+}

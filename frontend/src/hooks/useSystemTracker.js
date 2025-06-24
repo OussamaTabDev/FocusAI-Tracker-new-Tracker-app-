@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { systemTracker } from "../lib/systemTracker"
 
+
 export function useSystemTracker() {
   const [isTracking, setIsTracking] = useState(false)
   const [currentData, setCurrentData] = useState(null)
@@ -109,3 +110,11 @@ export function useSystemTracker() {
     getInstalledApps,
   }
 }
+
+// const activeWin = require('active-win');
+
+// async function logActiveApp() {
+//   const result = await activeWin();
+//   console.log(result);
+// }
+// setInterval(logActiveApp, 1000);

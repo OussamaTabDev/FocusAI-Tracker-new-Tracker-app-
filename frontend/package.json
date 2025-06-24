@@ -17,6 +17,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "active-win": "^9.0.0",
     "axios": "^1.10.0",
     "chart.js": "^4.5.0",
     "class-variance-authority": "^0.7.1",
@@ -28,11 +29,12 @@
     "react-router-dom": "^7.6.2",
     "react-scripts": "5.0.1",
     "tailwind-merge": "^3.3.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "electron": "^29.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "electron": "wait-on http://localhost:3000 && set ELECTRON_START_URL=http://localhost:3000 && electron .",
+    "electron": "electron electron-main.js",
     "electron-dev": "concurrently \"npm start\" \"npm run electron\"",
     "build": "react-scripts build",
     "electron-pack": "npm run build && electron-builder"
