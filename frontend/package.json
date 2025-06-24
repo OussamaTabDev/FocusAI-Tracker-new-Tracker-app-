@@ -4,23 +4,14 @@
   "private": true,
   "dependencies": {
     "@headlessui/react": "^2.2.4",
-    "@radix-ui/react-avatar": "^1.1.10",
-    "@radix-ui/react-dialog": "^1.1.14",
-    "@radix-ui/react-label": "^2.1.7",
-    "@radix-ui/react-progress": "^1.1.7",
-    "@radix-ui/react-select": "^2.2.5",
-    "@radix-ui/react-switch": "^1.2.5",
-    "@radix-ui/react-tabs": "^1.1.12",
     "@tailwindcss/cli": "^4.1.10",
     "@tailwindcss/postcss": "^4.1.10",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
-    "active-win": "^9.0.0",
     "axios": "^1.10.0",
     "chart.js": "^4.5.0",
-    "class-variance-authority": "^0.7.1",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.522.0",
     "react": "^19.1.0",
@@ -28,13 +19,11 @@
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.2",
     "react-scripts": "5.0.1",
-    "tailwind-merge": "^3.3.1",
-    "web-vitals": "^2.1.4",
-    "electron": "^29.0.0"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "electron": "electron electron-main.js",
+    "electron": "wait-on http://localhost:3000 && set ELECTRON_START_URL=http://localhost:3000 && electron .",
     "electron-dev": "concurrently \"npm start\" \"npm run electron\"",
     "build": "react-scripts build",
     "electron-pack": "npm run build && electron-builder"
@@ -58,6 +47,10 @@
     ]
   },
   "devDependencies": {
+    "@types/electron": "^1.4.38",
+    "@types/node": "^24.0.3",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
     "autoprefixer": "^10.4.21",
     "concurrently": "^9.2.0",
     "electron": "^36.5.0",
@@ -65,6 +58,7 @@
     "electron-is-dev": "^3.0.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
+    "typescript": "^4.9.5",
     "wait-on": "^8.0.3"
   },
   "main": "main.js",
