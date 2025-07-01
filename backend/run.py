@@ -12,6 +12,9 @@ def start_activity_monitoring():
 
 if __name__ == '__main__':
     # Create database tables
+    for rule in app.url_map.iter_rules():
+        print(f"Route: {rule} → Endpoint: {rule.endpoint}")
+
     with app.app_context():
         db.create_all()
     

@@ -19,7 +19,23 @@ class Config:
     # Security
     SECRET_KEY = os.getenv('SECRET_KEY', 'your-secret-key-change-this')
     
-    # Paths
-    DATA_DIR = os.path.join(os.path.expanduser('~'), 'FocusAI')
+
+
+
+    # Root directory of the app
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))  # Path to the config.py file
+    APP_DIR = os.path.join(BASE_DIR, '../../../')  # App root (adjust if needed)
+    
+    # App-local data directory
+    DATA_DIR = os.path.join(APP_DIR, 'FocusAI')
     SCREENSHOTS_DIR = os.path.join(DATA_DIR, 'screenshots')
     LOGS_DIR = os.path.join(DATA_DIR, 'logs')
+    STORAGE_FILE = os.path.join(APP_DIR, 'backend', 'instance')
+    STORAGE_FILE_JSON = os.path.join(STORAGE_FILE, 'Jsons')
+
+    # # Paths
+    # DATA_DIR = os.path.join(os.path.expanduser('~'), 'FocusAI')
+    # SCREENSHOTS_DIR = os.path.join(DATA_DIR, 'screenshots')
+    # LOGS_DIR = os.path.join(DATA_DIR, 'logs')
+    # STORAGE_FILE= os.path.join(DATA_DIR, 'backend/instance')
+    # STORAGE_FILE_JSON = os.path.join(DATA_DIR, 'backend/instance/Jsons')

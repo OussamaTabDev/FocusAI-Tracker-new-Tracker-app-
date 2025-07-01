@@ -6,11 +6,16 @@ type AppProps = {
 };
 
 const App: React.FC<AppProps> = (props) => {
-  return <div className="flex items-center justify-center h-screen bg-gray-900">
-      <h1 className="text-4xl font-bold text-blue-400">
-        🚀 Tailwind is working!
-      </h1>
-    </div>;
+  return  <div>
+    <div className="flex items-center justify-center h-screen bg-gray-900">
+        <h1 className="text-4xl font-bold text-blue-400">
+          🚀 Tailwind is working! is good
+        </h1>
+      </div>
+      
+  </div>
+    
+    ;
 
 };
 

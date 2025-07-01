@@ -56,57 +56,78 @@ FocusAI Tracker combines the power of AI with comprehensive activity monitoring 
 
 ## 🏗️ Architecture
 
-FocusAI Tracker uses a hybrid architecture combining Python backend services with an Electron frontend for optimal performance and user experience.
+FocusAI Tracker uses a hybrid architecture combining a Python Flask backend with a React/Electron frontend for optimal performance and user experience.
 
 ### Technology Stack
 
 **Frontend:**
-- **Electron**: Cross-platform desktop application framework
-- **React**: Component-based UI library
+- **Electron**: Desktop application shell
+- **React**: Component-based UI library (TypeScript)
 - **Tailwind CSS**: Utility-first CSS framework
-- **Chart.js**: Interactive data visualization
+- **Chart.js** & **react-chartjs-2**: Data visualization
+- **Lucide-react**, **date-fns**, **axios**, **@headlessui/react**
 
 **Backend:**
 - **Python 3.9+**: Core application logic
-- **FastAPI**: RESTful API framework for frontend-backend communication
-- **SQLite**: Local database for activity storage
-- **Cryptography**: Data encryption and security
+- **Flask**: RESTful API framework
+- **Flask-SQLAlchemy**: ORM for database
+- **Flask-Migrate**: Database migrations
+- **Flask-CORS**: CORS support
+- **Flask-RESTful**: API structure
+- **SQLite**: Local database
+- **Cryptography**: Data encryption
+- **psutil**, **pywin32**, **pillow**, **schedule**, **requests**
 
-**AI/ML Integration:**
-- **Google Gemini Flash API**: Advanced activity classification and advice generation
-- **TensorFlow Lite**: Optional local ML models for offline classification
-- **scikit-learn**: Data analysis and pattern recognition
-
-**System Integration:**
-- **psutil**: System and process monitoring
-- **pywin32**: Windows-specific system interactions
-- **Pillow**: Screenshot capture and processing
+**AI/ML Integration (Planned/Optional):**
+- **Google Gemini Flash API**: Advanced activity classification and advice generation (planned)
+- **TensorFlow Lite**, **scikit-learn**: Optional for local ML models (future)
 
 ### Project Structure
 ```
-focusai-tracker/
+FocusAI-Tracker/
 ├── backend/
 │   ├── app/
-│   │   ├── api/              # FastAPI routes
-│   │   ├── core/             # Core business logic
+│   │   ├── api/              # Flask API routes (activity, dashboard, settings, kids_mode, etc.)
+│   │   ├── core/             # Core config and logic
 │   │   ├── models/           # Database models
 │   │   ├── services/         # Business services
+│   │   ├── tracking/         # Activity tracking modules
 │   │   └── utils/            # Utility functions
-│   ├── tracking/             # Activity tracking modules
-│   ├── ai/                   # AI classification and advice
-│   └── requirements.txt
+│   ├── ai/                   # (Planned) AI/ML modules
+│   ├── scripts/              # Utility scripts
+│   ├── tests/                # Backend tests
+│   ├── instance/             # Flask instance folder
+│   ├── tracking/             # (Legacy/extra tracking modules)
+│   ├── requirements.txt
+│   ├── requirements-dev.txt
+│   └── run.py                # Backend entrypoint
 ├── frontend/
 │   ├── src/
 │   │   ├── components/       # React components
 │   │   ├── pages/            # Application pages
 │   │   ├── services/         # API communication
-│   │   └── utils/            # Frontend utilities
-│   ├── public/
-│   └── package.json
+│   │   ├── utils/            # Frontend utilities
+│   │   ├── assets/           # Static assets
+│   │   ├── styles/           # Tailwind and custom CSS
+│   │   ├── contexts/         # React contexts
+│   │   ├── hooks/            # Custom hooks
+│   │   └── layouts/          # Layout components
+│   ├── public/               # Static files for Electron/React
+│   ├── app/                  # (If used for Electron preload)
+│   ├── main.js               # Electron main process
+│   ├── package.json
+│   ├── tailwind.config.js
+│   ├── tsconfig.json
+│   └── postcss.config.js
 ├── shared/
-│   ├── config/               # Configuration files
-│   └── schemas/              # Data schemas
-└── docs/                     # Documentation
+│   ├── config/               # Shared configuration
+│   └── schemas/              # Shared data schemas
+├── docs/                     # Documentation
+├── template/                 # (If used for templates)
+├── docker-compose.yml        # (If used for deployment)
+├── LICENSE
+├── .gitignore
+└── readme.md
 ```
 
 ## 🚀 Installation
@@ -115,7 +136,7 @@ focusai-tracker/
 - **Windows 10/11** (64-bit)
 - **Python 3.9+**
 - **Node.js 16+**
-- **npm or yarn**
+- **npm**
 
 ### Quick Install (End Users)
 1. Download the latest release from [Releases](https://github.com/yourusername/focusai-tracker/releases)
@@ -137,7 +158,7 @@ pip install -r requirements.txt
 cd ../frontend
 npm install
 
-# Build the application
+# Build the frontend (for production)
 npm run build
 ```
 
@@ -166,42 +187,41 @@ npm install
 
 ### 2. Configuration
 ```bash
-# Copy environment template
+# Copy environment template (if available)
 cp .env.example .env
 
-# Edit configuration (add your API keys)
+# Edit .env with your settings (see backend/app/core/config.py for options)
+# DATABASE_URL=sqlite:///focusai.db
 # GEMINI_API_KEY=your_gemini_api_key_here
 # DEBUG=true
-# DATABASE_URL=sqlite:///focusai.db
+# SECRET_KEY=your-secret-key
 ```
 
 ### 3. Development Servers
 ```bash
-# Terminal 1: Start Python backend
+# Terminal 1: Start Python backend (Flask)
 cd backend
-python -m uvicorn app.main:app --reload --port 8000
+python run.py
 
-# Terminal 2: Start Electron frontend
+# Terminal 2: Start React frontend (for web)
 cd frontend
-npm run dev
+npm start
+
+# Terminal 3: Start Electron desktop app (after React dev server is running)
+cd frontend
+npm run electron-dev
 ```
 
 ### 4. Database Setup
-```bash
-# Run database migrations
-cd backend
-python -m alembic upgrade head
-
-# Create initial admin user (optional)
-python scripts/create_admin.py
-```
+- The database is auto-created on first run (SQLite by default).
+- For migrations, use Flask-Migrate (see scripts or docs for details).
 
 ## 📖 Usage
 
 ### First-Time Setup
 1. **Launch Application**: Open FocusAI Tracker from your desktop or start menu
 2. **Initial Configuration**: Set up basic preferences and screenshot settings
-3. **AI Setup**: Optionally configure Gemini API key for advanced features
+3. **AI Setup**: Optionally configure Gemini API key for advanced features (future)
 4. **Kids Mode**: Enable and configure parental controls if needed
 
 ### Daily Usage
@@ -219,27 +239,25 @@ python scripts/create_admin.py
 
 ## 🔗 API Integration
 
-### Gemini Flash API Setup
+### Gemini Flash API Setup (Planned)
 ```python
 # Configuration in .env file
 GEMINI_API_KEY=your_api_key_here
 GEMINI_MODEL=gemini-flash
 
-# Usage in code
-from app.services.ai_service import AIService
-
-ai_service = AIService()
-advice = ai_service.generate_daily_advice(user_activity_data)
+# Usage in code (planned)
+# from app.services.ai_service import AIService
+# ai_service = AIService()
+# advice = ai_service.generate_daily_advice(user_activity_data)
 ```
 
-### Custom AI Models
+### Custom AI Models (Planned)
 ```python
-# Add custom classification models
-from app.ai.custom_classifier import CustomClassifier
-
-classifier = CustomClassifier()
-classifier.train(training_data)
-activity_type = classifier.classify(window_title, app_name)
+# Add custom classification models (future)
+# from app.ai.custom_classifier import CustomClassifier
+# classifier = CustomClassifier()
+# classifier.train(training_data)
+# activity_type = classifier.classify(window_title, app_name)
 ```
 
 ## 🤝 Contributing
@@ -255,7 +273,7 @@ We welcome contributions from the community! Please see our [Contributing Guidel
 
 ### Code Standards
 - **Python**: Follow PEP 8 guidelines, use type hints
-- **JavaScript**: Use ESLint and Prettier for code formatting
+- **JavaScript/TypeScript**: Use ESLint and Prettier for code formatting
 - **Testing**: Write unit tests for new features
 - **Documentation**: Update documentation for API changes
 
@@ -271,7 +289,7 @@ We welcome contributions from the community! Please see our [Contributing Guidel
 
 ### Version 1.0 (Current)
 - [x] Basic activity tracking
-- [x] AI classification
+- [x] AI classification (basic)
 - [x] Simple reporting
 - [x] Kids Mode foundation
 
@@ -289,11 +307,11 @@ We welcome contributions from the community! Please see our [Contributing Guidel
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- **Google Gemini**: AI-powered insights and recommendations
+- **Google Gemini**: AI-powered insights and recommendations (planned)
 - **Electron Community**: Cross-platform desktop application framework
 - **Python Community**: Robust backend development ecosystem
 - **Contributors**: All developers who help improve FocusAI Tracker
