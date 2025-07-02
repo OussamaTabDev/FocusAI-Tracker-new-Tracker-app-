@@ -5,6 +5,7 @@ load_dotenv()
 
 class Config:
     # Database
+    SECRET_KEY = os.getenv('SECRET_KEY', 'dev-key-123')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///focusai.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
@@ -19,7 +20,8 @@ class Config:
     # Security
     SECRET_KEY = os.getenv('SECRET_KEY', 'your-secret-key-change-this')
     
-
+    # WebSocket settings
+    SOCKETIO_ASYNC_MODE = 'threading'
 
 
     # Root directory of the app
